@@ -13,7 +13,7 @@ public class QueryGeneral {
     QueryType queryType;
     DataSource dataSource;
 
-    QueryGeneral queryGeneral(QueryType queryType, DataSource dataSource, Dimensions[] dimensions, Granularity granularity, Aggregation[] aggregations, Intervals intervals){
+    public QueryGeneral (QueryType queryType, DataSource dataSource, Dimensions[] dimensions, Granularity granularity, Aggregation[] aggregations, Intervals intervals){
         this.queryType = queryType;
         this.dataSource = dataSource;
         this.dimensions = dimensions;
