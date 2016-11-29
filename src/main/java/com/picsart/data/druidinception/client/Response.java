@@ -44,8 +44,8 @@ public class Response {
         event.getAverageResponseTime();
     }
 
-    public void getCount(long count) {
-        event.getCount();
+    public long getCount() {
+         return event.getCount();
     }
 
     public void getNumOfUniqueDeviceId(long numOfUniqueDeviceId) {

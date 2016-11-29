@@ -6,7 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import com.google.gson.JsonElement;
 import java.lang.String;
+
+import com.picsart.data.druidinception.client.Response;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
+import org.apache.http.util.EntityUtils;
 
 //swith statementov, kaxvac useri koxmic trvac int-i arjeqi, parse anel tbyal int-in hamapatasxanox classi jsony
 //bayc switchi vaxt el eli meka string a linelu
@@ -36,32 +45,49 @@ public class Convert{
 
         StringEntity stringJson = gson.fromJson(json, StringEntity.class);
 
-        switch(dzev.toLowerCase()){     //es momenty mi hat petqa veranayel
-            case "timeseries": {
-                tSeries = gson.fromJson(json, TimeSeries.class);    //sra u mnacaci argumentneri mej, json-i texy, voncor petqa resulting jsony lini
-            }                                                       //bayc myus koxmic el, vereviny voncor sxal tesaketa
-                break;
-            case "topn":   tN = gson.fromJson(json, TopN.class);
-                break;
-            case "groupby": gB = gson.fromJson(json, GroupBy.class);
-                break;
-            case "timeboundary":  tBound = gson.fromJson(json, TimeBoundary.class);
-                break;
-            case "segmentmatadata":  sMeta = gson.fromJson(json, SegmentMetadata.class);
-                break;
-            case "datasource":  dSource = gson.fromJson(json, DataSource.class);
-                break;
-            case  "search":  srch = gson.fromJson(json, Search.class);
-                break;
-            case "select":  slct = gson.fromJson(json, Select.class);
-                break;
-            default:
-                break;
+//es takinnery navsyaki comment
+//        switch(dzev.toLowerCase()){     //es momenty mi hat petqa veranayel
+//            case "timeseries": {
+//                tSeries = gson.fromJson(json, TimeSeries.class);    //sra u mnacaci argumentneri mej, json-i texy, voncor petqa resulting jsony lini
+//            }                                                       //bayc myus koxmic el, vereviny voncor sxal tesaketa
+//                break;
+//            case "topn":   tN = gson.fromJson(json, TopN.class);
+//                break;
+//            case "groupby": gB = gson.fromJson(json, GroupBy.class);
+//                break;
+//            case "timeboundary":  tBound = gson.fromJson(json, TimeBoundary.class);
+//                break;
+//            case "segmentmatadata":  sMeta = gson.fromJson(json, SegmentMetadata.class);
+//                break;
+//            case "datasource":  dSource = gson.fromJson(json, DataSource.class);
+//                break;
+//            case  "search":  srch = gson.fromJson(json, Search.class);
+//                break;
+//            case "select":  slct = gson.fromJson(json, Select.class);
+//                break;
+//            default:
+//                break;
+//        }
+
+        String responseString = "";
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        try {
+            HttpPost postRequest = new HttpPost("http://107.182.229.208:8082/druid/v2/?pretty");
+            postRequest.setHeader("Content-type", "application/json");
+
+            postRequest.setEntity(stringJson);
+            HttpResponse response = httpClient.execute(postRequest);
+            HttpEntity entity = response.getEntity();
+            responseString = EntityUtils.toString(entity, "UTF-8");
+
+        } catch (Exception e) {
+
         }
 
+        Response[] elements = gson.fromJson(responseString, Response[].class);
 
-
-
+        System.out.println(elements[0].getTimeStamp());
+        System.out.println(elements[0].getCount());
 
     }
 }

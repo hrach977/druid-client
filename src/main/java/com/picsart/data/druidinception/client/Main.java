@@ -15,10 +15,51 @@ public class Main {
         Dimensions dims = new Dimensions();
         dims.setArray(dimensions);
 
+        //Aggregations
+        String type1 = "count";
+        String name1 = "count";
+        String fieldName1 = null;
+        Fields agrFlds = new Fields();
+        agrFlds.setType(type1);
+        agrFlds.setFieldName(name1);
+        agrFlds.setName(fieldName1);
+        List<Fields> aggregationFields = new ArrayList<>();
+        aggregationFields.add(agrFlds);
+        Aggregation aggregation = new Aggregation();
+        aggregation.setFields(aggregationFields);
+
+        //Intervals
+        String[] interval = new String[10];
+        interval[0] = "2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00";
+        Intervals inter = new Intervals();
+        inter.setIntervals(interval);
+
+
+        //LimitSpec
+        String type2 = "default";
+        int limit = 1000;
+        String[] columns = new String[1]; //esi erb uzenq karanq poxenq
+        LimitSpec limitSpec = new LimitSpec(limit, type2);
+        //columns[0] = "count";
+        limitSpec.setColumns(columns);
+
         //Granularity
-        String granularity = null;
+        String granularity = "day";
         Granularity granularity1 = new Granularity();
         granularity1.setGranularity(granularity);
+
+        //PostAggregations
+        String type3 = null;  //es 2y hly lcnel petq chi
+        String name3 = null;
+        String fieldName3 = null;
+        Fields postAgrFlds = new Fields();
+        postAgrFlds.setType(type3);
+        postAgrFlds.setFieldName(name3);
+        postAgrFlds.setName(fieldName3);
+        List<Fields> postaggregationFields = new ArrayList<>();
+        aggregationFields.add(postAgrFlds);
+        PostAggregation postaggregation = new PostAggregation();
+        postaggregation.setFields(postaggregationFields);
 
         //Filter
         String type = null;
@@ -34,53 +75,15 @@ public class Main {
         fltr.setFields(filterFields);
         fltr.setType(type);
 
-        //Aggregations
-        String type1 = null;
-        String name1 = null;
-        String fieldName1 = null;
-        Fields agrFlds = new Fields();
-        agrFlds.setType(type1);
-        agrFlds.setFieldName(name1);
-        agrFlds.setName(fieldName1);
-        List<Fields> aggregationFields = new ArrayList<>();
-        aggregationFields.add(agrFlds);
-        Aggregation aggregation = new Aggregation();
-        aggregation.setFields(aggregationFields);
-
-        //Intervals
-        String[] interval = new String[10];
-        Intervals inter = new Intervals();
-        inter.setIntervals(interval);
-
-        //LimitSpec
-        String type2 = null;
-        int limit = 1000;
-        String[] columns = new String[10];
-        LimitSpec limitSpec = new LimitSpec(limit, type2);
-        limitSpec.setColumns(columns);
-
-        //PostAggregations
-        String type3 = null;
-        String name3 = null;
-        String fieldName3 = null;
-        Fields postAgrFlds = new Fields();
-        postAgrFlds.setType(type3);
-        postAgrFlds.setFieldName(name3);
-        postAgrFlds.setName(fieldName3);
-        List<Fields> postaggregationFields = new ArrayList<>();
-        aggregationFields.add(postAgrFlds);
-        PostAggregation postaggregation = new PostAggregation();
-        postaggregation.setFields(postaggregationFields);
-
         //DataSource
-        String type4 = null;
-        String name4 = null;
+        String type4 = "table";
+        String name4 = "request-kafka";
         DataSource dataSource = new DataSource();
         dataSource.setName(name4);
         dataSource.setType(type4);
 
-        //QuerryType
-        String queryTypetype = null;
+        //QueryType
+        String queryTypetype = "groupBy";
         QueryType queryType = new QueryType();
         queryType.setQueryType(queryTypetype);
 
