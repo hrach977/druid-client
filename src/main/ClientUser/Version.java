@@ -4,7 +4,6 @@
 public class Version {
     String version = null;
 
-    ,,,
     public String getVersion() {
         return version;
     }

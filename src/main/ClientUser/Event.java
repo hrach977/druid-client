@@ -4,6 +4,10 @@
 public class Event {
     Count count = new Count();
     count.getCount();
-    AverageResponseTime avgResponseTime = new AverageResponseTime();
-    avgResponseTime.
+    AverageResponseTime averageResponseTime = new AverageResponseTime();
+    averageResponseTime.getAvgResponseTime();
+    CountDistinctUniqueDeviceId numOfUniqueDeviceId = new CountDistinctUniqueDeviceId();
+    numOfUniqueDeviceId.getNumOfUniqueDeviceId();
+    SumResponseTime sumResponseTime = new SumResponseTime();
+    sumResponseTime.getSumResponseTime();
 }
