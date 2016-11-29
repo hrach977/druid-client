@@ -5,22 +5,24 @@ import java.util.Date;
  */
 public class Response {
     private String version;
+    private Event event;
+    private Date timeStamp;
+
     public String getVersion() {
         return version;
     }
+
     public void setVersion(String version) {
         this.version = version;
     }
 
-    private Date timeStamp;
     public Date getTimeStamp() {
         return timeStamp;
     }
+
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
-
-    Event event;
 
     public void setAverageResponseTime(long avgResponseTime) {
         event.setAverageResponseTime(avgResponseTime);
