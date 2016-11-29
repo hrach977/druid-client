@@ -6,4 +6,12 @@ import java.util.List;
  */
 public class PostAggregation {
     List<Fields> fields;
+
+    public List<Fields> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<Fields> fields) {
+        this.fields = fields;
+    }
 }
