@@ -5,8 +5,18 @@ package com.picsart.data.druidinception;
  */
 public class LimitSpec {
     private String type;
-    private String dimension;
+    //private String dimension;
     private String[] columns;
+    private long limit;
+
+    public long getLimit() {
+        return limit;
+    }
+
+    public void setLimit(long limit) {
+        this.limit = limit;
+    }
+
 
     public String getType() {
         return type;
@@ -16,13 +26,13 @@ public class LimitSpec {
         this.type = type;
     }
 
-    public String getDimension() {
+   /* public String getDimension() {
         return dimension;
-    }
+    }*/
 
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
-    }
+//    public void setDimension(String dimension) {
+//        this.dimension = dimension;
+//    }
 
     public String[] getColumns() {
         return columns;
