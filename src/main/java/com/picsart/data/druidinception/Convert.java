@@ -177,7 +177,7 @@ public class Convert{
             responseString = EntityUtils.toString(entity, "UTF-8");
 
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
         Response[] elements = gson.fromJson(responseString, Response[].class);
