@@ -1,20 +1,34 @@
 package com.picsart.data.druidinception;
 
 /**
- * Created by hrachyeghishyan on 11/17/16.
+ * Created by hrachyeghishyan on 11/29/16.
  */
-public class Query<T> {    //probably meaningless
-   // private T asdf;
-    private Class<T> t;
+public class Query {
+    Dimensions dimensions;
+    Aggregation aggregations;
+    Intervals intervals;
+    LimitSpec limitSpec;
+    Granularity granularity;
+    PostAggregation postAggregations;
+    QueryType queryType;
+    DataSource dataSource;
 
-    public Query(Class<T> t){
-        this.t = t;
+    public Query(QueryType queryType, DataSource dataSource, Dimensions dimensions, Granularity granularity, Aggregation aggregations, Intervals intervals, LimitSpec limitSpec){
+        this.queryType = queryType;
+        this.dataSource = dataSource;
+        this.dimensions = dimensions;
+        this.granularity = granularity;
+        this.aggregations = aggregations;
+        this.intervals = intervals;
+        this.limitSpec = limitSpec;
     }
 
-    public T biuldOne() throws InstantiationException, IllegalAccessException{
-        return t.newInstance();
+    public PostAggregation getPostAggregations() {
+        return postAggregations;
     }
 
+    public void setPostAggregations(PostAggregation postAggregations) {
+
+        this.postAggregations = postAggregations;
+    }
 }
-
-

@@ -8,7 +8,7 @@ public class Search {
     DataSource dataSource;
     Granularity granularity;
     SearchDimensions searchDimensions;
-    Qry qry;  //in order not to merge with the generaic class Query<T>
+    Qry qry;  //in order not to merge with the generaic class QueryNotNeededYet<T>
     Sort sort;
     Intervals intervals;
 }

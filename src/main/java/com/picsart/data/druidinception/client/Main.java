@@ -54,12 +54,10 @@ public class Main {
 
         //LimitSpec
         String type2 = null;
-        String dimension = null;
+        int limit = 1000;
         String[] columns = new String[10];
-        LimitSpec limitSpec = new LimitSpec();
-        limitSpec.setType(type2);
+        LimitSpec limitSpec = new LimitSpec(limit, type2);
         limitSpec.setColumns(columns);
-        limitSpec.setDimension(dimension);
 
         //PostAggregations
         String type3 = null;
@@ -81,7 +79,10 @@ public class Main {
         dataSource.setName(name4);
         dataSource.setType(type4);
 
-        //QuerryType (Need to figure it out)
+        //QuerryType
+        String queryTypetype = null;
+        QueryType queryType = new QueryType();
+        queryType.setQueryType(queryTypetype);
 
         //Descending
         boolean forDescending = true;
@@ -93,5 +94,8 @@ public class Main {
         Metric metric = new Metric();
         metric.setName(name5);
 
+        //Query
+        Query query = new Query(queryType, dataSource, dims, granularity1, aggregation, inter, limitSpec);
+        query.setPostAggregations(postaggregation);
     }
 }

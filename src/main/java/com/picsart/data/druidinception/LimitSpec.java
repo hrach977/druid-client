@@ -7,28 +7,23 @@ public class LimitSpec {
     private String type;
     //private String dimension;
     private String[] columns;
-    private long limit;
+    private int limit;
 
-    public long getLimit() {
-        return limit;
-    }
-
-    public void setLimit(long limit) {
+    public LimitSpec(int limit, String type){
+        this.type = type;
         this.limit = limit;
     }
 
-
+    public int getLimit() {
+        return limit;
+    }
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-   /* public String getDimension() {
-        return dimension;
-    }*/
+//    public String getDimension() {
+//        return dimension;
+//    }
 
 //    public void setDimension(String dimension) {
 //        this.dimension = dimension;
@@ -37,7 +32,6 @@ public class LimitSpec {
     public String[] getColumns() {
         return columns;
     }
-
     public void setColumns(String[] columns) {
         this.columns = columns;
     }

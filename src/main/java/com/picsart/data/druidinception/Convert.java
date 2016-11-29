@@ -97,12 +97,12 @@ public class Convert{
 /* //T-n kardal mi texic, vori mej usery kgri
         //
         String z = "TopN";
-        Query<z> asd = new Query(); //merely the same name is not enough, directly the class is needed
+        QueryNotNeededYet<z> asd = new QueryNotNeededYet(); //merely the same name is not enough, directly the class is needed
 
         Gson gson = new Gson();
         //so why not in case of T?
-        Query<Integer> b = new Query();
-        Query<TimeSeries> c = new Query();
+        QueryNotNeededYet<Integer> b = new QueryNotNeededYet();
+        QueryNotNeededYet<TimeSeries> c = new QueryNotNeededYet();
 
         String h = FileUtils.readFileToString(args[1]);
 
@@ -112,13 +112,13 @@ public class Convert{
         }
 
         try {
-           Query<h> a= new Query();
+           QueryNotNeededYet<h> a= new QueryNotNeededYet();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try
         {
-            Query query = gson.fromJson(new FileReader(args[0]), Query.class);
+            QueryNotNeededYet query = gson.fromJson(new FileReader(args[0]), QueryNotNeededYet.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } */
