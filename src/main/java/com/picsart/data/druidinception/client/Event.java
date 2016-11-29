@@ -1,3 +1,5 @@
+package com.picsart.data.druidinception.client;
+
 /**
  * Created by Avetik on 11/29/16.
  */

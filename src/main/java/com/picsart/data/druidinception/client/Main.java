@@ -1,3 +1,5 @@
+package com.picsart.data.druidinception.client;
+
 import com.picsart.data.druidinception.*;
 import java.util.ArrayList;
 import java.util.List;
