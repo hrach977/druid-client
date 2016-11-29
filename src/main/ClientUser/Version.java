@@ -2,7 +2,7 @@
  * Created by Avetik on 11/29/16.
  */
 public class Version {
-    String version = null;
+    String version;
 
     public String getVersion() {
         return version;
