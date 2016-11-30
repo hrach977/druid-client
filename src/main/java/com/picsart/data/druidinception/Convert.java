@@ -28,7 +28,7 @@ import org.apache.http.util.EntityUtils;
 public class Convert{
     public static void main(String[] args) {
         Gson gson = new Gson();
-        JsonObject json = null;
+        //JsonObject json = null;
 //        try {
 //            json = gson.fromJson(new FileReader(args[0]), JsonObject.class); //??not sure
 //        } catch (FileNotFoundException e) {
@@ -72,81 +72,102 @@ public class Convert{
 //        }
 
         //Dimensions
-        String[] dimensions = new String[10];
-        Dimensions dims = new Dimensions();
-        dims.setArray(dimensions);
+        Dimensions dimension = new Dimensions();
+        String[] array = new String[0];
+        dimension.setArray(array);
+//        String[] dimensions = new String[10];
+//        Dimensions dims = new Dimensions();
+//        dims.setArray(dimensions);
 
         //Aggregations
         String type1 = "count";
         String name1 = "count";
         String fieldName1 = null;
         Fields agrFlds = new Fields();
-        agrFlds.setType(type1);
-        agrFlds.setFieldName(name1);
-        agrFlds.setName(fieldName1);
-        List<Fields> aggregationFields = new ArrayList<>();
-        aggregationFields.add(agrFlds);
-        Aggregation aggregation = new Aggregation();
-        aggregation.setFields(aggregationFields);
+        //agrFlds.setType(type1);
+        //agrFlds.setFieldName(name1);
+        //agrFlds.setName(fieldName1);
+        //List<Fields> aggregationFields = new ArrayList<>();
+        //aggregationFields.add(agrFlds);
+        Aggregation[] aggregation = new Aggregation[1];
+        aggregation[0].setName(name1);
+        aggregation[0].setType(type1);
+        //aggregation.setFields(aggregationFields);
 
         //Intervals
-        String[] interval = new String[10];
-        interval[0] = "2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00";
+        //String[] interval = new String[10];
+        //interval[0] = "2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00";
+        String time = "2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00";
         Intervals inter = new Intervals();
-        inter.setIntervals(interval);
+        inter.setTime(time);
+        //inter.setIntervals(interval);
 
 
         //LimitSpec
         String type2 = "default";
         int limit = 1000;
-        String[] columns = new String[1]; //esi erb uzenq karanq poxenq
-        LimitSpec limitSpec = new LimitSpec(limit, type2);
-        //columns[0] = "count";
+        String direction = "descending";
+        String dimension1 = "count";
+        Columns[] columns = new Columns[1];
+        columns[0].setDirection(direction);
+        columns[0].setDimension(dimension1);
+       // String[] columns = new String[1]; //esi erb uzenq karanq poxenq
+        LimitSpec limitSpec = new LimitSpec();
+        limitSpec.setLimit(limit);
+        limitSpec.setType(type2);
         limitSpec.setColumns(columns);
+        //columns[0] = "count";
+
 
         //Granularity
-        String granularity = "day";
-        Granularity granularity1 = new Granularity();
-        granularity1.setGranularity(granularity);
+        double duration = 86400000.0;
+        String type = "duration";
+        Granularity granularity = new Granularity();
+        granularity.setDuration(duration);
+        granularity.setType(type);
+//        String granularity = "day";
+//        Granularity granularity1 = new Granularity();
+//        granularity1.setGranularity(granularity);
 
         //PostAggregations
-        String type3 = null;  //es 2y hly lcnel petq chi
-        String name3 = null;
-        String fieldName3 = null;
-        Fields postAgrFlds = new Fields();
-        postAgrFlds.setType(type3);
-        postAgrFlds.setFieldName(name3);
-        postAgrFlds.setName(fieldName3);
-        List<Fields> postaggregationFields = new ArrayList<>();
-        aggregationFields.add(postAgrFlds);
-        PostAggregation postaggregation = new PostAggregation();
-        postaggregation.setFields(postaggregationFields);
+        PostAggregation[] postAggregation = new PostAggregation[0];
+//        String type3 = null;  //es 2y hly lcnel petq chi
+//        String name3 = null;
+//        String fieldName3 = null;
+//        Fields postAgrFlds = new Fields();
+//        postAgrFlds.setType(type3);
+//        postAgrFlds.setFieldName(name3);
+//        postAgrFlds.setName(fieldName3);
+//        List<Fields> postaggregationFields = new ArrayList<>();
+//        aggregationFields.add(postAgrFlds);
+//        PostAggregation postaggregation = new PostAggregation();
+//        postaggregation.setFields(postaggregationFields);
 
         //Filter
-        String type = null;
-        String name = null;
-        String fieldName = null;
-        Fields fltrflds = new Fields();
-        fltrflds.setType(type);
-        fltrflds.setFieldName(name);
-        fltrflds.setName(fieldName);
-        List<Fields> filterFields = new ArrayList<>();
-        filterFields.add(fltrflds);
-        Filter fltr = new Filter();
-        fltr.setFields(filterFields);
-        fltr.setType(type);
+//        String type = null;
+//        String name = null;
+//        String fieldName = null;
+//        Fields fltrflds = new Fields();
+//        fltrflds.setType(type);
+//        fltrflds.setFieldName(name);
+//        fltrflds.setName(fieldName);
+//        List<Fields> filterFields = new ArrayList<>();
+//        filterFields.add(fltrflds);
+//        Filter fltr = new Filter();
+//        fltr.setFields(filterFields);
+//        fltr.setType(type);
 
         //DataSource
-        String type4 = "table";
-        String name4 = "request-kafka";
+        String type3 = "requests-kafka";
         DataSource dataSource = new DataSource();
-        dataSource.setName(name4);
-        dataSource.setType(type4);
+        dataSource.setType(type3);
+
+
 
         //QueryType
-        String queryTypetype = "groupBy";
+        String type4 = "groupBy";
         QueryType queryType = new QueryType();
-        queryType.setQueryType(queryTypetype);
+        queryType.setType(type4);
 
         //Descending
         boolean forDescending = true;
@@ -159,10 +180,39 @@ public class Convert{
         metric.setName(name5);
 
         //Query
-        Query query = new Query(queryType, dataSource, dims, granularity1, aggregation, inter, limitSpec);
-        query.setPostAggregations(postaggregation);
+        Query query = new Query(queryType, dataSource, dimension, granularity, aggregation, inter, limitSpec);
+        query.setPostAggregations(postAggregation);
 
         String jsonString = gson.toJson(query);
+//        jsonString = "{\n" +
+//                "  \"dimensions\": [],\n" +
+//                "  \"aggregations\": [\n" +
+//                "      {\n" +
+//                "        \"type\": \"count\",\n" +
+//                "        \"name\": \"count\"\n" +
+//                "      }\n" +
+//                "  ],\n" +
+//                "  \"intervals\": \"2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00\",\n" +
+//                "  \"limitSpec\": {\n" +
+//                "    \"type\": \"default\",\n" +
+//                "    \"columns\": [\n" +
+//                "      {\n" +
+//                "        \"direction\": \"descending\", \n" +
+//                "        \"dimension\": \"count\"\n" +
+//                "      }\n" +
+//                "    ],\n" +
+//                "    \"limit\": 1000\n" +
+//                "  },\n" +
+//                "  \"granularity\": {\n" +
+//                "    \"duration\": 86400000.0, \n" +
+//                "    \"type\": \"duration\"\n" +
+//                "  },\n" +
+//                "  \"postAggregations\": [\n" +
+//                "      \n" +
+//                "  ],\n" +
+//                "  \"queryType\": \"groupBy\",\n" +
+//                "  \"dataSource\": \"requests-kafka\"\n" +
+//                "}";
 
 //zabor
         String responseString = "";
@@ -179,7 +229,8 @@ public class Convert{
         } catch (Exception e) {
 
         }
-
+        System.out.println(jsonString);
+        System.out.println(responseString);
         Response[] elements = gson.fromJson(responseString, Response[].class);
 
         System.out.println(elements[0].getTimeStamp());

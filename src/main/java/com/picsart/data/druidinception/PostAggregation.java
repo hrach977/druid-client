@@ -4,14 +4,20 @@ import java.util.List;
 /**
  * Created by hrachyeghishyan on 11/17/16.
  */
-public class PostAggregation {
-    List<Fields> fields;
+public class PostAggregation {  //needs to be revised
+    private String type;
+    private String name;
+    private String fn;
+    private List<Fields> fields;
+    private String ordering;
 
-    public List<Fields> getFields() {
-        return fields;
-    }
-
-    public void setFields(List<Fields> fields) {
-        this.fields = fields;
-    }
+//    List<Fields> fields;
+//
+//    public List<Fields> getFields() {
+//        return fields;
+//    }
+//
+//    public void setFields(List<Fields> fields) {
+//        this.fields = fields;
+//    }
 }

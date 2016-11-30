@@ -1,5 +1,6 @@
 package com.picsart.data.druidinception.client;
 import java.security.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Avetik on 11/29/16.
@@ -7,7 +8,7 @@ import java.security.Timestamp;
 public class Response {
     private String version;
     private Event event;
-    private Timestamp timeStamp; //poxel henc TimeStamp
+    private Date timestamp;
 
     public String getVersion() {
         return version;
@@ -17,12 +18,12 @@ public class Response {
         this.version = version;
     }
 
-    public Timestamp getTimeStamp() {
-        return timeStamp;
+    public Date getTimeStamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimeStamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setAverageResponseTime(long avgResponseTime) {
