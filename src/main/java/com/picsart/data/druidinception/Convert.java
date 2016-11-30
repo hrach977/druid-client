@@ -72,9 +72,10 @@ public class Convert{
 //        }
 
         //Dimensions
-        Dimensions dimension = new Dimensions();
-        String[] array = new String[0];
-        dimension.setArray(array);
+        String[] dimensions = new String[0];
+//        Dimensions dimension = new Dimensions();
+//        String[] array = new String[0];
+//        dimension.setArray(array);
 //        String[] dimensions = new String[10];
 //        Dimensions dims = new Dimensions();
 //        dims.setArray(dimensions);
@@ -82,14 +83,15 @@ public class Convert{
         //Aggregations
         String type1 = "count";
         String name1 = "count";
-        String fieldName1 = null;
-        Fields agrFlds = new Fields();
+        //String fieldName1 = null;
+        //Fields agrFlds = new Fields();
         //agrFlds.setType(type1);
         //agrFlds.setFieldName(name1);
         //agrFlds.setName(fieldName1);
         //List<Fields> aggregationFields = new ArrayList<>();
         //aggregationFields.add(agrFlds);
         Aggregation[] aggregation = new Aggregation[1];
+        aggregation[0] = new Aggregation();
         aggregation[0].setName(name1);
         aggregation[0].setType(type1);
         //aggregation.setFields(aggregationFields);
@@ -97,9 +99,9 @@ public class Convert{
         //Intervals
         //String[] interval = new String[10];
         //interval[0] = "2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00";
-        String time = "2016-11-22T11:14:57+00:00/2016-11-29T11:14:57+00:00";
-        Intervals inter = new Intervals();
-        inter.setTime(time);
+        String intervals = "2016-11-28T11:14:57+00:00/2016-11-29T11:14:57+00:00";
+//        Intervals inter = new Intervals();
+//        inter.setTime(time);
         //inter.setIntervals(interval);
 
 
@@ -109,6 +111,7 @@ public class Convert{
         String direction = "descending";
         String dimension1 = "count";
         Columns[] columns = new Columns[1];
+        columns[0] = new Columns();
         columns[0].setDirection(direction);
         columns[0].setDimension(dimension1);
        // String[] columns = new String[1]; //esi erb uzenq karanq poxenq
@@ -120,7 +123,7 @@ public class Convert{
 
 
         //Granularity
-        double duration = 86400000.0;
+        double duration = 86400000.0/24;
         String type = "duration";
         Granularity granularity = new Granularity();
         granularity.setDuration(duration);
@@ -158,16 +161,16 @@ public class Convert{
 //        fltr.setType(type);
 
         //DataSource
-        String type3 = "requests-kafka";
-        DataSource dataSource = new DataSource();
-        dataSource.setType(type3);
+        String dataSource = "requests-kafka";
+//        DataSource dataSource = new DataSource();
+//        dataSource.setType(type3);
 
 
 
         //QueryType
-        String type4 = "groupBy";
-        QueryType queryType = new QueryType();
-        queryType.setType(type4);
+        String queryType = "groupBy";
+//        QueryType queryType = new QueryType();
+//        queryType.setType(type4);
 
         //Descending
         boolean forDescending = true;
@@ -180,7 +183,7 @@ public class Convert{
         metric.setName(name5);
 
         //Query
-        Query query = new Query(queryType, dataSource, dimension, granularity, aggregation, inter, limitSpec);
+        Query query = new Query(queryType, dataSource, dimensions, granularity, aggregation, intervals, limitSpec);
         query.setPostAggregations(postAggregation);
 
         String jsonString = gson.toJson(query);

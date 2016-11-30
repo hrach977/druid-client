@@ -4,16 +4,16 @@ package com.picsart.data.druidinception;
  * Created by hrachyeghishyan on 11/29/16.
  */
 public class Query {
-    private Dimensions dimensions;
+    private String[] dimensions;
     private Aggregation[] aggregations;
-    private Intervals intervals;
+    private String intervals;
     private LimitSpec limitSpec;
     private Granularity granularity;
     private PostAggregation[] postAggregations;
-    private QueryType queryType;
-    private DataSource dataSource;
+    private String queryType;
+    private String dataSource;
 
-    public Query(QueryType queryType, DataSource dataSource, Dimensions dimensions, Granularity granularity, Aggregation[] aggregations, Intervals intervals, LimitSpec limitSpec){
+    public Query(String queryType, String dataSource, String[] dimensions, Granularity granularity, Aggregation[] aggregations, String intervals, LimitSpec limitSpec){
         this.queryType = queryType;
         this.dataSource = dataSource;
         this.dimensions = dimensions;
