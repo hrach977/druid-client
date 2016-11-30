@@ -40,19 +40,19 @@ public class Response {
         event.setSumResponseTime(sumResponseTime);
     }
 
-    public void getAvgResponseTime(long avgResponseTime) {
-        event.getAverageResponseTime();
+    public long getAvgResponseTime(long avgResponseTime) {
+        return event.getAverageResponseTime();
     }
 
     public long getCount() {
          return event.getCount();
     }
 
-    public void getNumOfUniqueDeviceId(long numOfUniqueDeviceId) {
-        event.getNumOfUniqueDeviceId();
+    public long getNumOfUniqueDeviceId(long numOfUniqueDeviceId) {
+        return event.getNumOfUniqueDeviceId();
     }
 
-    public void getSumResponseTime(long sumResponseTime) {
-        event.getSumResponseTime();
+    public long getSumResponseTime(long sumResponseTime)  {
+        return event.getSumResponseTime();
     }
 }
