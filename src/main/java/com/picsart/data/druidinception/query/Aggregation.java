@@ -1,13 +1,20 @@
-package com.picsart.data.druidinception;
+package com.picsart.data.druidinception.query;
 
-import java.util.ArrayList;
-import java.util.List;
 /**
- * Created by hrachyeghishyan on 11/17/16.
+ * @author hrachya.yeghishyan@picsart.com
  */
 public class Aggregation {
     private String type;
     private String name;
+    private String fieldName;
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
     public String getType() {
         return type;
@@ -24,18 +31,5 @@ public class Aggregation {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
-//    List<Fields> fields;
-//
-//    public List<Fields> getFields() {
-//        return fields;
-//    }
-//
-//    public void setFields(List<Fields> fields) {
-//        this.fields = fields;
-//    }
-
 
 }

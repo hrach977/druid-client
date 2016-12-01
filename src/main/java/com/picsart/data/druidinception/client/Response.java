@@ -3,7 +3,7 @@ import java.security.Timestamp;
 import java.util.Date;
 
 /**
- * Created by Avetik on 11/29/16.
+ * @author avetik.sarikyan@picsart.com
  */
 public class Response {
     private String version;
@@ -42,7 +42,7 @@ public class Response {
         event.setSumResponseTime(sumResponseTime);
     }
 
-    public long getAvgResponseTime(long avgResponseTime) {
+    public long getAvgResponseTime() {
         return event.getAverageResponseTime();
     }
 
@@ -50,11 +50,11 @@ public class Response {
          return event.getCount();
     }
 
-    public long getNumOfUniqueDeviceId(long numOfUniqueDeviceId) {
+    public long getNumOfUniqueDeviceId() {
         return event.getNumOfUniqueDeviceId();
     }
 
-    public long getSumResponseTime(long sumResponseTime)  {
+    public long getSumResponseTime()  {
         return event.getSumResponseTime();
     }
 }

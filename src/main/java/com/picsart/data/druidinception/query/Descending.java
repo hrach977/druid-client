@@ -1,7 +1,7 @@
-package com.picsart.data.druidinception;
+package com.picsart.data.druidinception.query;
 
 /**
- * Created by hrachyeghishyan on 11/17/16.
+ * @author hrachya.yeghishyan@picsart.com
  */
 public class Descending {
     private  boolean descending;

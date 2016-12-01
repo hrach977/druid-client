@@ -1,7 +1,7 @@
-package com.picsart.data.druidinception;
+package com.picsart.data.druidinception.query;
 
 /**
- * Created by hrachyeghishyan on 11/30/16.
+ * @author hrachya.yeghishyan@picsart.com
  */
 public class Columns {
     private String direction;

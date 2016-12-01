@@ -1,7 +1,7 @@
-package com.picsart.data.druidinception;
+package com.picsart.data.druidinception.query;
 
 /**
- * Created by hrachyeghishyan on 11/21/16.
+ * @author hrachya.yeghishyan@picsart.com
  */
 public class Metric {
     private String[] name;

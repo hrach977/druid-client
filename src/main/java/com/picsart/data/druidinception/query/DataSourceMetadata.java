@@ -1,17 +1,17 @@
-package com.picsart.data.druidinception;
+package com.picsart.data.druidinception.query;
 
 /**
- * Created by hrachyeghishyan on 11/21/16.
+ * @author hrachya.yeghishyan@picsart.com
  */
 public class DataSourceMetadata {
-    QueryType queryType;
-    DataSource dataSource;
+    private String queryType;
+    private DataSource dataSource;
 
-    public QueryType getQueryType() {
+    public String getQueryType() {
         return queryType;
     }
 
-    public void setQueryType(QueryType queryType) {
+    public void setQueryType(String queryType) {
         this.queryType = queryType;
     }
 

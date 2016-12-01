@@ -1,7 +1,7 @@
 package com.picsart.data.druidinception.client;
 
 /**
- * Created by Avetik on 11/29/16.
+ * @author avetik.sarikyan@picsart.com
  */
 public class Event {
     private long count;
