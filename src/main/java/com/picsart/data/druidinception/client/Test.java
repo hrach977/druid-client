@@ -121,10 +121,12 @@ public class Test {
         metric.setName(name5);
 
         //Query
-        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
-        q.setFilter(filter);
-
-        DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
-        druidClient.query(q, Response[].class);
+//        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
+//        q.setFilter(filter);
+//
+//        DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
+//        druidClient.query(q, Response[].class);
+        ToolsCharts timestamp = new ToolsCharts();
+        timestamp.Timestamp(27,1);
     }
 }

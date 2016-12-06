@@ -2,8 +2,6 @@ package com.picsart.data.druidinception.client;
 
 import com.google.gson.Gson;
 import java.lang.String;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.picsart.data.druidinception.query.*;
 import org.apache.http.HttpEntity;
