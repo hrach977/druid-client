@@ -41,6 +41,6 @@ public class Filter {
         filter.setDimensions(dimensionForFilter);
         filter.setValue(valueOfFiltersDimension);
 
-        return filter;
+        return filter;//
     }
 }
