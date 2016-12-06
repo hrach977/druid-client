@@ -45,8 +45,8 @@ public class Test {
         aggregation[1].setFieldName(fieldName);
 
         //Intervals
-
-        String intervals = "2016-11-29T14:21:28+00:00/2016-11-30T14:21:28+00:00";
+        ToolsCharts timestamp = new ToolsCharts();
+        String intervals = timestamp.Timestamp(4,1);
 
         //LimitSpec
         String type2 = "default";
@@ -121,12 +121,11 @@ public class Test {
         metric.setName(name5);
 
         //Query
-//        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
-//        q.setFilter(filter);
-//
-//        DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
-//        druidClient.query(q, Response[].class);
-        ToolsCharts timestamp = new ToolsCharts();
-        timestamp.Timestamp(27,1);
+        Query q = new Query(queryType, dataSource, dimension.get(3), granularity, aggregation, intervals, limitSpec, postAggregation);
+        q.setFilter(filter);
+
+        DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
+        druidClient.query(q, Response[].class);
+        System.out.println();
     }
 }

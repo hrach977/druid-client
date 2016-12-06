@@ -28,7 +28,7 @@ public class ToolsCharts {
         }
         else
             x = rightNow.get(Calendar.YEAR) + "-" + (rightNow.get(Calendar.MONTH) + 1) + "-" + (rightNow.get(Calendar.DAY_OF_MONTH) - from) + "T" + (rightNow.get(Calendar.HOUR) - 4) + ":" + rightNow.get(Calendar.MINUTE) + ":" + rightNow.get(Calendar.SECOND) + "+00:00/" + rightNow.get(Calendar.YEAR) + "-" + (rightNow.get(Calendar.MONTH) + 1) + "-" + (rightNow.get(Calendar.DAY_OF_MONTH) - to) + "T" + (rightNow.get(Calendar.HOUR) - 4) + ":" + rightNow.get(Calendar.MINUTE) + ":" + rightNow.get(Calendar.SECOND) + "+00:00";
-        System.out.println(x);
+
         return x;
     }
 
