@@ -4,6 +4,7 @@ import com.picsart.data.druidinception.query.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class Test {
 
         //Intervals
         Intervals timestamp = new Intervals();
-        String intervals = timestamp.ts("2016/10/11", "2016/10/12");
+        String intervals = timestamp.ts("2016/12/01", "2016/12/06");
 
         //LimitSpec
         String type2 = "default";
@@ -116,10 +117,15 @@ public class Test {
         metric.setName(name5);
 
         //Query
-        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
+
+        long t1 = System.currentTimeMillis();
+        Query q = new Query(queryType, dataSource, dimension.get(4), granularity, aggregation, intervals, limitSpec, postAggregation);
         q.setFilter(filter);
 
         DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
         druidClient.query(q, Response[].class);
+
+
+        System.out.println((System.currentTimeMillis()-t1)/1000);
     }
 }
