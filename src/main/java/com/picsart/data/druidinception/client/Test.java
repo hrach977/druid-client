@@ -126,6 +126,6 @@ public class Test {
         druidClient.query(q, Response[].class);
 
 
-        System.out.println((System.currentTimeMillis()-t1)/1000);
+        System.out.println((System.currentTimeMillis()-t1)/1000);//
     }
 }
