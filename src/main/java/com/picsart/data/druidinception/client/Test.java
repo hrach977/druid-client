@@ -2,6 +2,7 @@ package com.picsart.data.druidinception.client;
 
 import com.picsart.data.druidinception.query.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by Avetik on 12/1/16.
  */
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         //Dimensions
         List<String[]> dimension= new ArrayList<>();
         String[]dimensionForProtocol = new String[1];
@@ -45,8 +46,8 @@ public class Test {
         aggregation[1].setFieldName(fieldName);
 
         //Intervals
-        ToolsCharts timestamp = new ToolsCharts();
-        String intervals = timestamp.Timestamp(4,1);
+        Intervals timestamp = new Intervals();
+        String intervals = timestamp.ts("2016/10/11", "2016/10/12");
 
         //LimitSpec
         String type2 = "default";
@@ -61,7 +62,6 @@ public class Test {
         limitSpec.setLimit(limit);
         limitSpec.setType(type2);
         limitSpec.setColumns(columns);
-
 
 
         //Granularity
@@ -90,22 +90,17 @@ public class Test {
         postAggregation[0].setName("avg_response_time");
         postAggregation[0].setFn("/");
 
-
         //Filter
         Filter filter = new Filter();
         String typeForFiltering = "selector";
-        String dimensionForFilter = "country_code";
-        String valueOfFiltersDimension = "AM";
+        String dimensionForFilter = "app";
+        String valueOfFiltersDimension = "com.picsart.studio";
         filter.setType(typeForFiltering);
         filter.setDimensions(dimensionForFilter);
         filter.setValue(valueOfFiltersDimension);
 
         //DataSource
         String dataSource = "requests-kafka";
-//        DataSource dataSource = new DataSource();
-//        dataSource.setType(type3);
-
-
 
         //QueryType
         String queryType = "groupBy";
@@ -121,11 +116,10 @@ public class Test {
         metric.setName(name5);
 
         //Query
-        Query q = new Query(queryType, dataSource, dimension.get(3), granularity, aggregation, intervals, limitSpec, postAggregation);
+        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
         q.setFilter(filter);
 
         DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
         druidClient.query(q, Response[].class);
-        System.out.println();
     }
 }
