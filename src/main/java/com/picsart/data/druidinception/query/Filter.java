@@ -32,4 +32,15 @@ public class Filter {
         this.type = type;
     }
 
+    public Filter getAppFilter(){
+        Filter filter = new Filter();
+        String typeForFiltering = "selector";
+        String dimensionForFilter = "app";
+        String valueOfFiltersDimension = "com.picsart.studio";
+        filter.setType(typeForFiltering);
+        filter.setDimensions(dimensionForFilter);
+        filter.setValue(valueOfFiltersDimension);
+
+        return filter;
+    }
 }
