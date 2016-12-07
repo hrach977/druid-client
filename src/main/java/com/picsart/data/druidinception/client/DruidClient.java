@@ -42,6 +42,7 @@ public class DruidClient {
             HttpResponse response = httpClient.execute(postRequest);
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
+            System.out.println(responseString);
         } catch (Exception e) {
             e.printStackTrace();
         }

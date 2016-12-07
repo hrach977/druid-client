@@ -1,5 +1,7 @@
 package com.picsart.data.druidinception.query;
 
+import java.util.List;
+
 /**
  * @author hrachya.yeghishyan@picsart.com
  */
@@ -102,4 +104,7 @@ public class Query {
         this.filter = filter;
     }
 
-}
+
+    }
+
+

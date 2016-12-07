@@ -14,7 +14,7 @@ public class Test {
     public static void main(String[] args) throws ParseException {
         //Dimensions
         List<String[]> dimension= new ArrayList<>();
-        String[]dimensionForProtocol = new String[1];
+        String[] dimensionForProtocol = new String[1];
         dimensionForProtocol[0] = "protocol";
         dimension.add(dimensionForProtocol);
         String[] dimensionForRadioType = new String[1];
@@ -93,12 +93,39 @@ public class Test {
 
         //Filter
         Filter filter = new Filter();
-        String typeForFiltering = "selector";
-        String dimensionForFilter = "app";
-        String valueOfFiltersDimension = "com.picsart.studio";
-        filter.setType(typeForFiltering);
-        filter.setDimensions(dimensionForFilter);
-        filter.setValue(valueOfFiltersDimension);
+        Fields field1 = new Fields();
+        Fields field2 = new Fields();
+        filter.getFields().add(field1);
+        filter.getFields().add(field2);
+        String typeField1 = "";
+        String dimensionField1 = "";
+        String valueField1 = "";
+        String typeField2 = "";
+        String dimensionField2 = "";
+        String valueField2 = "";
+        filter.getFields().get(0).setType(typeField1);
+        filter.getFields().get(0).setDimension(dimensionField1);
+        filter.getFields().get(0).setValue(valueField1);
+        filter.getFields().get(1).setType(typeField2);
+        filter.getFields().get(1).setDimension(dimensionField2);
+        filter.getFields().get(1).setValue(valueField2);
+
+//       //List<Filter> filters = new ArrayList<>();
+//       //Filter filter = new Filter();
+//        int num = 2;
+//        Filter[] filters = new Filter[2];
+//        for(int i=0; i<num; i++){
+//            filters[i] = new Filter();
+//        }
+
+
+//        Filter filter = new Filter();
+//        String typeForFiltering = "selector";
+//        String dimensionForFilter = "app";
+//        String valueOfFiltersDimension = "com.picsart.studio";
+//        filter.setType(typeForFiltering);
+//        filter.setDimensions(dimensionForFilter);
+//        filter.setValue(valueOfFiltersDimension);
 
         //DataSource
         String dataSource = "requests-kafka";
@@ -119,7 +146,7 @@ public class Test {
         //Query
 
         long t1 = System.currentTimeMillis();
-        Query q = new Query(queryType, dataSource, dimension.get(4), granularity, aggregation, intervals, limitSpec, postAggregation);
+        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
         q.setFilter(filter);
 
         DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
