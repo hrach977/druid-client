@@ -143,7 +143,7 @@ public class Test {
         Metric metric = new Metric();
         metric.setName(name5);
 
-        //Query
+        //Query/
 
         long t1 = System.currentTimeMillis();
         Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
