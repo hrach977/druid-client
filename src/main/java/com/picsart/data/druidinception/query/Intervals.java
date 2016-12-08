@@ -18,14 +18,10 @@ public class Intervals {
       this.time = time;
    }
 
-   public static String ts(String from, String to) throws ParseException {
+   public static String ts(Date from, Date to) throws ParseException {
       final Date currentTime = new Date();
 
-      final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy/MM/d");
       final SimpleDateFormat intervalDateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ssXXX");
-
-      Date fromDate = inputDateFormat.parse(from);
-      Date toDate = inputDateFormat.parse(to);
-      return intervalDateFormat.format(fromDate) + "/" + intervalDateFormat.format(toDate);
+      return intervalDateFormat.format(from) + "/" + intervalDateFormat.format(to);
    }
 }

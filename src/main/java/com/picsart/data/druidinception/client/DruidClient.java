@@ -31,7 +31,7 @@ public class DruidClient {
     public <T> T query(Query query, Class<T> clazz) {
         Gson gson = new Gson();
         String queryJson = gson.toJson(query);
-
+        System.out.println(queryJson);
         String responseString = "";
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {

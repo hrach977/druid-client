@@ -1,36 +1,41 @@
 package com.picsart.data.druidinception.client;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.picsart.data.druidinception.query.*;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Avetik on 12/1/16.
  */
 public class Test {
     public static void main(String[] args) throws ParseException {
-        //Dimensions
-        List<String[]> dimension= new ArrayList<>();
-        String[] dimensionForProtocol = new String[1];
-        dimensionForProtocol[0] = "protocol";
-        dimension.add(dimensionForProtocol);
-        String[] dimensionForRadioType = new String[1];
-        dimensionForRadioType[0] = "radio_type";
-        dimension.add(dimensionForRadioType);
-        String[] dimensionForContent = new String[1];
-        dimensionForContent[0] = "response_type";
-        dimension.add(dimensionForContent);
-        String[] dimensionForCountry = new String[1];
-        dimensionForCountry[0] = "country_code";
-        dimension.add(dimensionForCountry);
-        String[] dimensionForCareer = new String[1];
-        dimensionForCareer[0] = "career";
-        dimension.add(dimensionForCareer);
 
-        //Aggregations
+       SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/dd");
+       String from = "2016/12/02";
+       Date from1 = sdf.parse(from);
+       String to = "2016/12/06";
+       Date to1 = sdf.parse(to);
+
+
+        Query radio_nam = RadioNameDistribution(null,from1, to1, "AM", null, null);
+        DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
+        druidClient.query(radio_nam, Response[].class);
+
+
+    }
+
+
+    public static Query RadioNameDistribution(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException {
+        String[] dimension = new String[1];
+        dimension[0] = "radio_name";
+        //Aggregation
         String type1 = "count";
         String name1 = "count";
         int x = 2;
@@ -41,42 +46,77 @@ public class Test {
         String type7 = "doubleSum";
         String name = "sum_response_time";
         String fieldName = "sum_response_time";
-        aggregation[1]= new Aggregation();
+        aggregation[1] = new Aggregation();
         aggregation[1].setType(type7);
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
 
-        //Intervals
-        Intervals timestamp = new Intervals();
-        String intervals = timestamp.ts("2016/12/01", "2016/12/06");
+        List<Fields> fieldss = new ArrayList<>();
+        Filter filter = new Filter();
+        List<String> filterDimension = new ArrayList<>();
+        List<String> filterValue = new ArrayList<>();
+        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
+            filterDimension.add("app");
+            filterDimension.add("country_code");
+            filterDimension.add("platform");
+            filterDimension.add("radio_name");
 
-        //LimitSpec
-        String type2 = "default";
-        int limit = 1000;
-        String direction = "descending";
-        String dimensionForLimitSpecForRadioType = "avg_response_time";
+            filterValue.add(app);
+            filterValue.add(countryCode);
+            filterValue.add(platform);
+            filterValue.add(radioName);
+
+            for (int i = 0; i < 4; i++) {
+                if (filterValue.get(i) != null) {
+                    fieldss.get(i).setDimension(filterDimension.get(i));
+                    fieldss.get(i).setValue(filterValue.get(i));
+                    fieldss.get(i).setType("selector");
+                }
+            }
+            filter.setFields(fieldss);
+            filter.setType("and");
+
+        } else if (app != null) {
+            filter.setDimension("app");
+            filter.setValue(app);
+            filter.setType("selector");
+        } else if (countryCode != null) {
+            filter.setDimension("country_code");
+            filter.setValue(countryCode);
+            filter.setType("selector");
+        } else if (platform != null) {
+            filter.setDimension("platform");
+            filter.setValue(platform);
+            filter.setType("selector");
+        } else if (radioName != null) {
+            filter.setDimension("radio_name");
+            filter.setValue(radioName);
+            filter.setType("selector");
+        }
+        Intervals intervals = new Intervals();
+        String inter = intervals.ts(from, to);
+
+        LimitSpec limitSpec = new LimitSpec();
+        limitSpec.setLimit(10000);
+        limitSpec.setType("default");
         Columns[] columns = new Columns[1];
         columns[0] = new Columns();
-        columns[0].setDirection(direction);
-        columns[0].setDimension(dimensionForLimitSpecForRadioType);
-        LimitSpec limitSpec = new LimitSpec();
-        limitSpec.setLimit(limit);
-        limitSpec.setType(type2);
+        columns[0].setDirection("descending");
+        columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
 
-
-        //Granularity
-        double duration = 86400000.0/24;
-        String type = "duration";
         Granularity granularity = new Granularity();
-        granularity.setDuration(duration);
-        granularity.setType(type);
-
-        //PostAggregations
-        PostAggregation[] postAggregation = new PostAggregation[1];
-        for (int j = 0; j <postAggregation.length; j++ ){
-            postAggregation[j] = new PostAggregation();
+        granularity.setType("duration");
+        if (TimeUnit.DAYS.convert(to.getTime() - from.getTime(), TimeUnit.MILLISECONDS) <= 2) {
+            granularity.setDuration(86400000.0 / 24);
         }
+        else if(TimeUnit.HOURS.convert(to.getTime() - from.getTime(), TimeUnit.MILLISECONDS) <= 1)
+            granularity.setDuration(86400000/(24*60));
+        else
+            granularity.setDuration(86400000.0);
+
+        PostAggregation[] postAggregation = new PostAggregation[1];
+        postAggregation[0] = new PostAggregation();
         Fields[] fieldsForRadioUResponse = new Fields[2];
         fieldsForRadioUResponse[0] = new Fields();
         fieldsForRadioUResponse[1] = new Fields();
@@ -91,68 +131,9 @@ public class Test {
         postAggregation[0].setName("avg_response_time");
         postAggregation[0].setFn("/");
 
-        //Filter
-        Filter filter = new Filter();
-        Fields field1 = new Fields();
-        Fields field2 = new Fields();
-        filter.getFields().add(field1);
-        filter.getFields().add(field2);
-        String typeField1 = "";
-        String dimensionField1 = "";
-        String valueField1 = "";
-        String typeField2 = "";
-        String dimensionField2 = "";
-        String valueField2 = "";
-        filter.getFields().get(0).setType(typeField1);
-        filter.getFields().get(0).setDimension(dimensionField1);
-        filter.getFields().get(0).setValue(valueField1);
-        filter.getFields().get(1).setType(typeField2);
-        filter.getFields().get(1).setDimension(dimensionField2);
-        filter.getFields().get(1).setValue(valueField2);
+        Query radio_name = new Query("groupBy", "requests-kafka", dimension, granularity, aggregation, inter, limitSpec, postAggregation);
+        radio_name.setFilter(filter);
 
-//       //List<Filter> filters = new ArrayList<>();
-//       //Filter filter = new Filter();
-//        int num = 2;
-//        Filter[] filters = new Filter[2];
-//        for(int i=0; i<num; i++){
-//            filters[i] = new Filter();
-//        }
-
-
-//        Filter filter = new Filter();
-//        String typeForFiltering = "selector";
-//        String dimensionForFilter = "app";
-//        String valueOfFiltersDimension = "com.picsart.studio";
-//        filter.setType(typeForFiltering);
-//        filter.setDimensions(dimensionForFilter);
-//        filter.setValue(valueOfFiltersDimension);
-
-        //DataSource
-        String dataSource = "requests-kafka";
-
-        //QueryType
-        String queryType = "groupBy";
-
-        //Descending
-        boolean forDescending = true;
-        Descending descending = new Descending();
-        descending.setDescending(forDescending);
-
-        //Metric
-        String[] name5 = new String[10];
-        Metric metric = new Metric();
-        metric.setName(name5);
-
-        //Query/
-
-        long t1 = System.currentTimeMillis();
-        Query q = new Query(queryType, dataSource, dimension.get(1), granularity, aggregation, intervals, limitSpec, postAggregation);
-        q.setFilter(filter);
-
-        DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
-        druidClient.query(q, Response[].class);
-
-
-        System.out.println((System.currentTimeMillis()-t1)/1000);//
+        return radio_name;
     }
 }

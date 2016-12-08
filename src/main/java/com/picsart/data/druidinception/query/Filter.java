@@ -6,6 +6,26 @@ import java.util.List;
  */
 public class Filter {
     private List<Fields> fields;
+    private String type;
+
+    public String getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    private String dimension;
+    private String value;
 
     public List<Fields> getFields() {
         return fields;
@@ -13,6 +33,14 @@ public class Filter {
 
     public void setFields(List<Fields> fields) {
         this.fields = fields;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
 

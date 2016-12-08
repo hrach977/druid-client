@@ -18,6 +18,7 @@ public class Query {
 
 
 
+
     public Query(String queryType, String dataSource, String[] dimensions, Granularity granularity, Aggregation[] aggregations, String intervals, LimitSpec limitSpec, PostAggregation[] postAggregations ){
         this.queryType = queryType;
         this.dataSource = dataSource;
@@ -31,6 +32,8 @@ public class Query {
     public Query(){
 
     }
+
+
 
     public String[] getDimensions() {
         return dimensions;
