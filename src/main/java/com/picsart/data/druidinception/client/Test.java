@@ -26,9 +26,22 @@ public class Test {
         Date to1 = sdf.parse(to);
 
 
-        Query radio_nam = ImageRequestWithResponseTime(null, from1, to1, "AM", null, null, "jpeg");
+        Query radio_nam = RadioNamePieCHart("com.picsart.studio", from1, to1, null, null, null);
+        Query radio_nam_dist = RadioNameDistribution("com.picsart.studio", from1, to1, null, null, null);
+        Query cont_avg_res_time = ContentAndAvgResponseTime("com.picsart.studio", from1, to1, null, null, null);
+        Query imageRequestWithResponseTime = ImageRequestWithResponseTime("com.picsart.studio", from1, to1, null, null, null,"jpeg");
+        Query protocolQuery = protocolQuery("com.picsart.studio", from1, to1, null, null, null);
+        Query  careerQuery = careerQuery("com.picsart.studio", from1, to1, null, null, null);
+        Query countryMap = CountryMap("com.picsart.studio", from1, to1, null, null, null);
+
         DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
         druidClient.query(radio_nam, Response[].class);
+        druidClient.query(radio_nam_dist,Response[].class);
+        druidClient.query(cont_avg_res_time,Response[].class);
+        druidClient.query(imageRequestWithResponseTime,Response[].class);
+        druidClient.query(protocolQuery,Response[].class);
+        druidClient.query(careerQuery,Response[].class);
+        druidClient.query(countryMap,Response[].class);
 
 
     }
@@ -37,6 +50,7 @@ public class Test {
     public static Query RadioNamePieCHart(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException {
         String[] dimension = new String[1];
         dimension[0] = "radio_name";
+        int counter=-1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -48,49 +62,41 @@ public class Test {
 
         List<Fields> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
 
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-
-            for (int i = 0; i < 4; i++) {
+            if(countryCode != null){
                 fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
+                counter++;
+                fieldss.get(counter).setDimension("country_code");
+                fieldss.get(counter).setValue(countryCode);
+                fieldss.get(counter).setType("selector");
             }
+
+            if(platform !=null){
+                fieldss.add(new Fields());
+                counter++;
+                fieldss.get(counter).setDimension("platform");
+                fieldss.get(counter).setValue(platform);
+                fieldss.get(counter).setType("selector");
+            }
+            if(radioName != null){
+                fieldss.add(new Fields());
+                counter++;
+                fieldss.get(counter).setDimension("radioName");
+                fieldss.get(counter).setValue(radioName);
+                fieldss.get(counter).setType("selector");
+            }
+            if(app != null){
+                fieldss.add(new Fields());
+                counter++;
+                fieldss.get(counter).setDimension("app");
+                fieldss.get(counter).setValue(app);
+                fieldss.get(counter).setType("selector");
+            }
+
             filter.setFields(fieldss);
             filter.setType("and");
-        } else if (app != null) {
-            filter.setDimension("app");
-            filter.setValue(app);
-            filter.setType("selector");
-        } else if (countryCode != null) {
-            filter.setDimension("country_code");
-            filter.setValue(countryCode);
-            filter.setType("selector");
-        } else if (platform != null) {
-            filter.setDimension("platform");
-            filter.setValue(platform);
-            filter.setType("selector");
-        } else if (radioName != null) {
-            filter.setDimension("radio_name");
-            filter.setValue(radioName);
-            filter.setType("selector");
-        }
+
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
 
@@ -118,9 +124,11 @@ public class Test {
         return radio_namePie;
     }
 
+
     public static Query RadioNameDistribution(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException {
         String[] dimension = new String[1];
         dimension[0] = "radio_name";
+        int counter = -1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -138,49 +146,41 @@ public class Test {
 
         List<Fields> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
 
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-
-            for (int i = 0; i < 4; i++) {
-                fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
-            }
-            filter.setFields(fieldss);
-            filter.setType("and");
-        } else if (app != null) {
-            filter.setDimension("app");
-            filter.setValue(app);
-            filter.setType("selector");
-        } else if (countryCode != null) {
-            filter.setDimension("country_code");
-            filter.setValue(countryCode);
-            filter.setType("selector");
-        } else if (platform != null) {
-            filter.setDimension("platform");
-            filter.setValue(platform);
-            filter.setType("selector");
-        } else if (radioName != null) {
-            filter.setDimension("radio_name");
-            filter.setValue(radioName);
-            filter.setType("selector");
+        if(countryCode != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("country_code");
+            fieldss.get(counter).setValue(countryCode);
+            fieldss.get(counter).setType("selector");
         }
+
+        if(platform !=null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("platform");
+            fieldss.get(counter).setValue(platform);
+            fieldss.get(counter).setType("selector");
+        }
+        if(radioName != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("radioName");
+            fieldss.get(counter).setValue(radioName);
+            fieldss.get(counter).setType("selector");
+        }
+        if(app != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("app");
+            fieldss.get(counter).setValue(app);
+            fieldss.get(counter).setType("selector");
+        }
+
+        filter.setFields(fieldss);
+        filter.setType("and");
+
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
 
@@ -228,6 +228,7 @@ public class Test {
     public static Query ContentAndAvgResponseTime(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException {
         String[] dimension = new String[1];
         dimension[0] = "response_type";
+        int counter = -1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -245,49 +246,40 @@ public class Test {
 
         List<Fields> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
 
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-
-            for (int i = 0; i < 4; i++) {
-                fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
-            }
-            filter.setFields(fieldss);
-            filter.setType("and");
-        } else if (app != null) {
-            filter.setDimension("app");
-            filter.setValue(app);
-            filter.setType("selector");
-        } else if (countryCode != null) {
-            filter.setDimension("country_code");
-            filter.setValue(countryCode);
-            filter.setType("selector");
-        } else if (platform != null) {
-            filter.setDimension("platform");
-            filter.setValue(platform);
-            filter.setType("selector");
-        } else if (radioName != null) {
-            filter.setDimension("radio_name");
-            filter.setValue(radioName);
-            filter.setType("selector");
+        if(countryCode != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("country_code");
+            fieldss.get(counter).setValue(countryCode);
+            fieldss.get(counter).setType("selector");
         }
+
+        if(platform !=null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("platform");
+            fieldss.get(counter).setValue(platform);
+            fieldss.get(counter).setType("selector");
+        }
+        if(radioName != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("radioName");
+            fieldss.get(counter).setValue(radioName);
+            fieldss.get(counter).setType("selector");
+        }
+        if(app != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("app");
+            fieldss.get(counter).setValue(app);
+            fieldss.get(counter).setType("selector");
+        }
+
+        filter.setFields(fieldss);
+        filter.setType("and");
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
 
@@ -335,6 +327,7 @@ public class Test {
     public static Query ImageRequestWithResponseTime(String app, Date from, Date to, String countryCode, String platform, String radioName, String imageType) throws ParseException {
         String[] dimension = new String[1];
         dimension[0] = "response_type";
+        int counter = -1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -351,48 +344,51 @@ public class Test {
         aggregation[1].setFieldName(fieldName);
 
         List<Fields> fieldss = new ArrayList<>();
-
         Filter filter = new Filter();
 
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) ||
-                (app != null && radioName != null) || (countryCode != null && platform != null) ||
-                    (countryCode != null && radioName != null) || (platform != null && radioName != null)||
-                        (app != null && imageType != null) || (countryCode != null && imageType != null) ||
-                            ( platform != null && imageType != null) || (radioName != null &&   imageType != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
-            filterDimension.add("response_type");
-
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-            filterValue.add("image/"+ imageType);
-
-            for (int i = 0; i < 5; i++) {
-                fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
-            }
-            filter.setFields(fieldss);
-            filter.setType("and");
-
+        if(countryCode != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("country_code");
+            fieldss.get(counter).setValue(countryCode);
+            fieldss.get(counter).setType("selector");
         }
-        else if(imageType != null){
-            filter.setDimension("response_type");
-            filter.setValue("image/" + imageType);
-            filter.setType("selector");
+
+        if(platform !=null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("platform");
+            fieldss.get(counter).setValue(platform);
+            fieldss.get(counter).setType("selector");
         }
+        if(radioName != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("radioName");
+            fieldss.get(counter).setValue(radioName);
+            fieldss.get(counter).setType("selector");
+        }
+        if(app != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("app");
+            fieldss.get(counter).setValue(app);
+            fieldss.get(counter).setType("selector");
+        }
+
+        if(imageType != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("response_type");
+            fieldss.get(counter).setValue("image/" + imageType);
+            fieldss.get(counter).setType("selector");
+        }
+
+        filter.setFields(fieldss);
+        filter.setType("and");
+
+
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
 
@@ -440,6 +436,7 @@ public class Test {
     public static Query protocolQuery(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException{
         String[] dimension = new String[1];
         dimension[0] = "protocol";
+        int counter = -1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -457,47 +454,41 @@ public class Test {
         aggregation[1].setFieldName(fieldName);
         List<Fields> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-            for (int i = 0; i < 4; i++) {
-                fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
-            }
-            filter.setFields(fieldss);
-            filter.setType("and");
-        } else if (app != null) {
-            filter.setDimension("app");
-            filter.setValue(app);
-            filter.setType("selector");
-        } else if (countryCode != null) {
-            filter.setDimension("country_code");
-            filter.setValue(countryCode);
-            filter.setType("selector");
-        } else if (platform != null) {
-            filter.setDimension("platform");
-            filter.setValue(platform);
-            filter.setType("selector");
-        } else if (radioName != null) {
-            filter.setDimension("radio_name");
-            filter.setValue(radioName);
-            filter.setType("selector");
+
+        if(countryCode != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("country_code");
+            fieldss.get(counter).setValue(countryCode);
+            fieldss.get(counter).setType("selector");
         }
+
+        if(platform !=null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("platform");
+            fieldss.get(counter).setValue(platform);
+            fieldss.get(counter).setType("selector");
+        }
+        if(radioName != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("radioName");
+            fieldss.get(counter).setValue(radioName);
+            fieldss.get(counter).setType("selector");
+        }
+        if(app != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("app");
+            fieldss.get(counter).setValue(app);
+            fieldss.get(counter).setType("selector");
+        }
+
+        filter.setFields(fieldss);
+        filter.setType("and");
+
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
         LimitSpec limitSpec = new LimitSpec();
@@ -541,6 +532,7 @@ public class Test {
     public static Query careerQuery (String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException{
         String[] dimension = new String[1];
         dimension[0] = "operator";
+        int counter = -1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -558,47 +550,40 @@ public class Test {
         aggregation[1].setFieldName(fieldName);
         List<Fields> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-            for (int i = 0; i < 4; i++) {
-                fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
-            }
-            filter.setFields(fieldss);
-            filter.setType("and");
-        } else if (app != null) {
-            filter.setDimension("app");
-            filter.setValue(app);
-            filter.setType("selector");
-        } else if (countryCode != null) {
-            filter.setDimension("country_code");
-            filter.setValue(countryCode);
-            filter.setType("selector");
-        } else if (platform != null) {
-            filter.setDimension("platform");
-            filter.setValue(platform);
-            filter.setType("selector");
-        } else if (radioName != null) {
-            filter.setDimension("radio_name");
-            filter.setValue(radioName);
-            filter.setType("selector");
+
+        if(countryCode != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("country_code");
+            fieldss.get(counter).setValue(countryCode);
+            fieldss.get(counter).setType("selector");
         }
+
+        if(platform !=null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("platform");
+            fieldss.get(counter).setValue(platform);
+            fieldss.get(counter).setType("selector");
+        }
+        if(radioName != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("radioName");
+            fieldss.get(counter).setValue(radioName);
+            fieldss.get(counter).setType("selector");
+        }
+        if(app != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("app");
+            fieldss.get(counter).setValue(app);
+            fieldss.get(counter).setType("selector");
+        }
+
+        filter.setFields(fieldss);
+        filter.setType("and");
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
         LimitSpec limitSpec = new LimitSpec();
@@ -642,6 +627,7 @@ public class Test {
     public static Query CountryMap(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException {
         String[] dimension = new String[1];
         dimension[0] = "country_code";
+        int counter =-1;
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -659,49 +645,41 @@ public class Test {
 
         List<Fields> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-        List<String> filterDimension = new ArrayList<>();
-        List<String> filterValue = new ArrayList<>();
-        if ((app != null && countryCode != null) || (app != null && platform != null) || (app != null && radioName != null) || (countryCode != null && platform != null) || (countryCode != null && radioName != null) || (platform != null && radioName != null)) {
-            filterDimension.add("app");
-            filterDimension.add("country_code");
-            filterDimension.add("platform");
-            filterDimension.add("radio_name");
 
-            filterValue.add(app);
-            filterValue.add(countryCode);
-            filterValue.add(platform);
-            filterValue.add(radioName);
-
-            for (int i = 0; i < 4; i++) {
-                fieldss.add(new Fields());
-                if (filterValue.get(i) != null) {
-                    fieldss.get(i).setDimension(filterDimension.get(i));
-                    fieldss.get(i).setValue(filterValue.get(i));
-                    fieldss.get(i).setType("selector");
-                }
-                else {
-                    fieldss.set(i,null);
-                }
-            }
-            filter.setFields(fieldss);
-            filter.setType("and");
-        } else if (app != null) {
-            filter.setDimension("app");
-            filter.setValue(app);
-            filter.setType("selector");
-        } else if (countryCode != null) {
-            filter.setDimension("country_code");
-            filter.setValue(countryCode);
-            filter.setType("selector");
-        } else if (platform != null) {
-            filter.setDimension("platform");
-            filter.setValue(platform);
-            filter.setType("selector");
-        } else if (radioName != null) {
-            filter.setDimension("radio_name");
-            filter.setValue(radioName);
-            filter.setType("selector");
+        if(countryCode != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("country_code");
+            fieldss.get(counter).setValue(countryCode);
+            fieldss.get(counter).setType("selector");
         }
+
+        if(platform !=null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("platform");
+            fieldss.get(counter).setValue(platform);
+            fieldss.get(counter).setType("selector");
+        }
+        if(radioName != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("radioName");
+            fieldss.get(counter).setValue(radioName);
+            fieldss.get(counter).setType("selector");
+        }
+        if(app != null){
+            fieldss.add(new Fields());
+            counter++;
+            fieldss.get(counter).setDimension("app");
+            fieldss.get(counter).setValue(app);
+            fieldss.get(counter).setType("selector");
+        }
+
+        filter.setFields(fieldss);
+        filter.setType("and");
+
+
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
 
