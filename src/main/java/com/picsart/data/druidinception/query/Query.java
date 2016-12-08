@@ -19,7 +19,7 @@ public class Query {
 
 
 
-    public Query(String queryType, String dataSource, String[] dimensions, Granularity granularity, Aggregation[] aggregations, String intervals, LimitSpec limitSpec, PostAggregation[] postAggregations ){
+    public Query(String queryType, String dataSource, String[] dimensions, Granularity granularity, Aggregation[] aggregations, String intervals, LimitSpec limitSpec){
         this.queryType = queryType;
         this.dataSource = dataSource;
         this.dimensions = dimensions;
@@ -27,7 +27,6 @@ public class Query {
         this.aggregations = aggregations;
         this.intervals = intervals;
         this.limitSpec = limitSpec;
-        this.postAggregations = postAggregations;
     }
     public Query(){
 
