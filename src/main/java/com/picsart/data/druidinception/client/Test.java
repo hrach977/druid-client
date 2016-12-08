@@ -34,7 +34,7 @@ public class Test {
 
     public static Query RadioNamePieCHart(String app, Date from, Date to, String countryCode, String platform, String radioName) throws ParseException {
         String[] dimension = new String[1];
-        dimension[0] = "radio_type";
+        dimension[0] = "radio_name";
         //Aggregation
         String type1 = "count";
         String name1 = "count";
@@ -59,7 +59,7 @@ public class Test {
             filterValue.add(platform);
             filterValue.add(radioName);
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 fieldss.add(new Fields());
                 if (filterValue.get(i) != null) {
                     fieldss.get(i).setDimension(filterDimension.get(i));
