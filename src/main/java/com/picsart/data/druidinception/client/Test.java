@@ -1,7 +1,5 @@
 package com.picsart.data.druidinception.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.picsart.data.druidinception.query.*;
 
 import java.text.ParseException;
@@ -20,9 +18,9 @@ public class Test {
     public static void main(String[] args) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/dd");
-        String from = "2016/12/02";
+        String from = "2016/12/07";
         Date from1 = sdf.parse(from);
-        String to = "2016/12/05";
+        String to = "2016/12/12";
         Date to1 = sdf.parse(to);
 
 
@@ -35,13 +33,13 @@ public class Test {
         Query countryMap = CountryMap("com.picsart.studio", from1, to1, null, null, null);
 
         DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
-        druidClient.query(radio_nam, Response[].class);
-        druidClient.query(radio_nam_dist,Response[].class);
-        druidClient.query(cont_avg_res_time,Response[].class);
-        druidClient.query(imageRequestWithResponseTime,Response[].class);
-        druidClient.query(protocolQuery,Response[].class);
-        druidClient.query(careerQuery,Response[].class);
-        druidClient.query(countryMap,Response[].class);
+        //druidClient.query(radio_nam, Response[].class);
+        List<Response> r = druidClient.query(radio_nam_dist);
+//        druidClient.query(cont_avg_res_time,Response[].class);
+//        druidClient.query(imageRequestWithResponseTime,Response[].class);
+//        druidClient.query(protocolQuery,Response[].class);
+//        druidClient.query(careerQuery,Response[].class);
+//        druidClient.query(countryMap,Response[].class);
 
 
     }
@@ -60,11 +58,11 @@ public class Test {
         aggregation[0].setType(type1);
 
 
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
-
+        List<Field> fieldsss = new ArrayList<>();
             if(countryCode != null){
-                fieldss.add(new Fields());
+                fieldss.add(new Field());
                 counter++;
                 fieldss.get(counter).setDimension("country_code");
                 fieldss.get(counter).setValue(countryCode);
@@ -72,30 +70,26 @@ public class Test {
             }
 
             if(platform !=null){
-                fieldss.add(new Fields());
+                fieldss.add(new Field());
                 counter++;
                 fieldss.get(counter).setDimension("platform");
                 fieldss.get(counter).setValue(platform);
                 fieldss.get(counter).setType("selector");
             }
             if(radioName != null){
-                fieldss.add(new Fields());
+                fieldss.add(new Field());
                 counter++;
                 fieldss.get(counter).setDimension("radioName");
                 fieldss.get(counter).setValue(radioName);
                 fieldss.get(counter).setType("selector");
             }
             if(app != null){
-                fieldss.add(new Fields());
+                fieldss.add(new Field());
                 counter++;
                 fieldss.get(counter).setDimension("app");
                 fieldss.get(counter).setValue(app);
                 fieldss.get(counter).setType("selector");
             }
-
-            filter.setFields(fieldss);
-            filter.setType("and");
-
 
         Intervals intervals = new Intervals();
         String inter = intervals.ts(from, to);
@@ -103,8 +97,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(1000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("count");
         limitSpec.setColumns(columns);
@@ -144,11 +138,11 @@ public class Test {
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
 
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
 
         if(countryCode != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("country_code");
             fieldss.get(counter).setValue(countryCode);
@@ -156,21 +150,21 @@ public class Test {
         }
 
         if(platform !=null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("platform");
             fieldss.get(counter).setValue(platform);
             fieldss.get(counter).setType("selector");
         }
         if(radioName != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("radioName");
             fieldss.get(counter).setValue(radioName);
             fieldss.get(counter).setType("selector");
         }
         if(app != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("app");
             fieldss.get(counter).setValue(app);
@@ -187,8 +181,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(1000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
@@ -204,9 +198,9 @@ public class Test {
 
         PostAggregation[] postAggregation = new PostAggregation[1];
         postAggregation[0] = new PostAggregation();
-        Fields[] fieldsForRadioUResponse = new Fields[2];
-        fieldsForRadioUResponse[0] = new Fields();
-        fieldsForRadioUResponse[1] = new Fields();
+        Field[] fieldsForRadioUResponse = new Field[2];
+        fieldsForRadioUResponse[0] = new Field();
+        fieldsForRadioUResponse[1] = new Field();
         fieldsForRadioUResponse[0].setName("sum_response_time");
         fieldsForRadioUResponse[1].setName("count");
         fieldsForRadioUResponse[0].setType("fieldAccess");
@@ -244,11 +238,11 @@ public class Test {
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
 
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
 
         if(countryCode != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("country_code");
             fieldss.get(counter).setValue(countryCode);
@@ -256,21 +250,21 @@ public class Test {
         }
 
         if(platform !=null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("platform");
             fieldss.get(counter).setValue(platform);
             fieldss.get(counter).setType("selector");
         }
         if(radioName != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("radioName");
             fieldss.get(counter).setValue(radioName);
             fieldss.get(counter).setType("selector");
         }
         if(app != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("app");
             fieldss.get(counter).setValue(app);
@@ -286,8 +280,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(1000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
@@ -303,9 +297,9 @@ public class Test {
 
         PostAggregation[] postAggregation = new PostAggregation[1];
         postAggregation[0] = new PostAggregation();
-        Fields[] fieldsForRadioUResponse = new Fields[2];
-        fieldsForRadioUResponse[0] = new Fields();
-        fieldsForRadioUResponse[1] = new Fields();
+        Field[] fieldsForRadioUResponse = new Field[2];
+        fieldsForRadioUResponse[0] = new Field();
+        fieldsForRadioUResponse[1] = new Field();
         fieldsForRadioUResponse[0].setName("sum_response_time");
         fieldsForRadioUResponse[1].setName("count");
         fieldsForRadioUResponse[0].setType("fieldAccess");
@@ -343,11 +337,11 @@ public class Test {
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
 
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
 
         if(countryCode != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("country_code");
             fieldss.get(counter).setValue(countryCode);
@@ -355,21 +349,21 @@ public class Test {
         }
 
         if(platform !=null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("platform");
             fieldss.get(counter).setValue(platform);
             fieldss.get(counter).setType("selector");
         }
         if(radioName != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("radioName");
             fieldss.get(counter).setValue(radioName);
             fieldss.get(counter).setType("selector");
         }
         if(app != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("app");
             fieldss.get(counter).setValue(app);
@@ -377,7 +371,7 @@ public class Test {
         }
 
         if(imageType != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("response_type");
             fieldss.get(counter).setValue("image/" + imageType);
@@ -395,8 +389,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(1000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
@@ -412,9 +406,9 @@ public class Test {
 
         PostAggregation[] postAggregation = new PostAggregation[1];
         postAggregation[0] = new PostAggregation();
-        Fields[] fieldsForRadioUResponse = new Fields[2];
-        fieldsForRadioUResponse[0] = new Fields();
-        fieldsForRadioUResponse[1] = new Fields();
+        Field[] fieldsForRadioUResponse = new Field[2];
+        fieldsForRadioUResponse[0] = new Field();
+        fieldsForRadioUResponse[1] = new Field();
         fieldsForRadioUResponse[0].setName("sum_response_time");
         fieldsForRadioUResponse[1].setName("count");
         fieldsForRadioUResponse[0].setType("fieldAccess");
@@ -452,11 +446,11 @@ public class Test {
         aggregation[1].setType(type7);
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
 
         if(countryCode != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("country_code");
             fieldss.get(counter).setValue(countryCode);
@@ -464,21 +458,21 @@ public class Test {
         }
 
         if(platform !=null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("platform");
             fieldss.get(counter).setValue(platform);
             fieldss.get(counter).setType("selector");
         }
         if(radioName != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("radioName");
             fieldss.get(counter).setValue(radioName);
             fieldss.get(counter).setType("selector");
         }
         if(app != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("app");
             fieldss.get(counter).setValue(app);
@@ -494,8 +488,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(10000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
@@ -510,9 +504,9 @@ public class Test {
             granularity.setDuration(86400000.0);
         PostAggregation[] postAggregation = new PostAggregation[1];
         postAggregation[0] = new PostAggregation();
-        Fields[] fieldsForRadioUResponse = new Fields[2];
-        fieldsForRadioUResponse[0] = new Fields();
-        fieldsForRadioUResponse[1] = new Fields();
+        Field[] fieldsForRadioUResponse = new Field[2];
+        fieldsForRadioUResponse[0] = new Field();
+        fieldsForRadioUResponse[1] = new Field();
         fieldsForRadioUResponse[0].setName("sum_response_time");
         fieldsForRadioUResponse[1].setName("count");
         fieldsForRadioUResponse[0].setType("fieldAccess");
@@ -548,11 +542,11 @@ public class Test {
         aggregation[1].setType(type7);
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
 
         if(countryCode != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("country_code");
             fieldss.get(counter).setValue(countryCode);
@@ -560,21 +554,21 @@ public class Test {
         }
 
         if(platform !=null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("platform");
             fieldss.get(counter).setValue(platform);
             fieldss.get(counter).setType("selector");
         }
         if(radioName != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("radioName");
             fieldss.get(counter).setValue(radioName);
             fieldss.get(counter).setType("selector");
         }
         if(app != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("app");
             fieldss.get(counter).setValue(app);
@@ -589,8 +583,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(10000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
@@ -605,9 +599,9 @@ public class Test {
             granularity.setDuration(86400000.0);
         PostAggregation[] postAggregation = new PostAggregation[1];
         postAggregation[0] = new PostAggregation();
-        Fields[] fieldsForRadioUResponse = new Fields[2];
-        fieldsForRadioUResponse[0] = new Fields();
-        fieldsForRadioUResponse[1] = new Fields();
+        Field[] fieldsForRadioUResponse = new Field[2];
+        fieldsForRadioUResponse[0] = new Field();
+        fieldsForRadioUResponse[1] = new Field();
         fieldsForRadioUResponse[0].setName("sum_response_time");
         fieldsForRadioUResponse[1].setName("count");
         fieldsForRadioUResponse[0].setType("fieldAccess");
@@ -643,11 +637,11 @@ public class Test {
         aggregation[1].setName(name);
         aggregation[1].setFieldName(fieldName);
 
-        List<Fields> fieldss = new ArrayList<>();
+        List<Field> fieldss = new ArrayList<>();
         Filter filter = new Filter();
 
         if(countryCode != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("country_code");
             fieldss.get(counter).setValue(countryCode);
@@ -655,21 +649,21 @@ public class Test {
         }
 
         if(platform !=null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("platform");
             fieldss.get(counter).setValue(platform);
             fieldss.get(counter).setType("selector");
         }
         if(radioName != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("radioName");
             fieldss.get(counter).setValue(radioName);
             fieldss.get(counter).setType("selector");
         }
         if(app != null){
-            fieldss.add(new Fields());
+            fieldss.add(new Field());
             counter++;
             fieldss.get(counter).setDimension("app");
             fieldss.get(counter).setValue(app);
@@ -686,8 +680,8 @@ public class Test {
         LimitSpec limitSpec = new LimitSpec();
         limitSpec.setLimit(1000);
         limitSpec.setType("default");
-        Columns[] columns = new Columns[1];
-        columns[0] = new Columns();
+        Column[] columns = new Column[1];
+        columns[0] = new Column();
         columns[0].setDirection("descending");
         columns[0].setDimension("avg_response_time");
         limitSpec.setColumns(columns);
@@ -703,9 +697,9 @@ public class Test {
 
         PostAggregation[] postAggregation = new PostAggregation[1];
         postAggregation[0] = new PostAggregation();
-        Fields[] fieldsForRadioUResponse = new Fields[2];
-        fieldsForRadioUResponse[0] = new Fields();
-        fieldsForRadioUResponse[1] = new Fields();
+        Field[] fieldsForRadioUResponse = new Field[2];
+        fieldsForRadioUResponse[0] = new Field();
+        fieldsForRadioUResponse[1] = new Field();
         fieldsForRadioUResponse[0].setName("sum_response_time");
         fieldsForRadioUResponse[1].setName("count");
         fieldsForRadioUResponse[0].setType("fieldAccess");

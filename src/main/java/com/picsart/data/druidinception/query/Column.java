@@ -3,7 +3,7 @@ package com.picsart.data.druidinception.query;
 /**
  * @author hrachya.yeghishyan@picsart.com
  */
-public class Columns {
+public class Column {
     private String direction;
     private String dimension;
 

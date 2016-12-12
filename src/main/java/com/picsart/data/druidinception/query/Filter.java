@@ -5,7 +5,7 @@ import java.util.List;
  * @author hrachya.yeghishyan@picsart.com
  */
 public class Filter {
-    private List<Fields> fields;
+    private List<Field> fields;
     private String type;
 
     public String getDimension() {
@@ -27,11 +27,11 @@ public class Filter {
     private String dimension;
     private String value;
 
-    public List<Fields> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
-    public void setFields(List<Fields> fields) {
+    public void setFields(List<Field> fields) {
         this.fields = fields;
     }
 

@@ -1,15 +1,25 @@
 package com.picsart.data.druidinception.query;
 
+import java.util.List;
+
 /**
  * @author hrachya.yeghishyan@picsart.com
  */
-public class Fields {
+public class Field {
     private String type;
     private String dimension;
     private String value;
     private String name;
     private String fieldName;
+    private List<Field> fields;
 
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<Field> fields) {
+        this.fields = fields;
+    }
 
     public String getType() {
         return type;

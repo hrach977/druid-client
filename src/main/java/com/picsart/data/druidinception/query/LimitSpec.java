@@ -6,7 +6,7 @@ package com.picsart.data.druidinception.query;
 public class LimitSpec {
     private int limit;
     private String type;
-    private Columns[] columns;
+    private Column[] columns;
 
     public int getLimit() {
         return limit;
@@ -24,11 +24,11 @@ public class LimitSpec {
         this.type = type;
     }
 
-    public Columns[] getColumns() {
+    public Column[] getColumns() {
         return columns;
     }
 
-    public void setColumns(Columns[] columns) {
+    public void setColumns(Column[] columns) {
         this.columns = columns;
     }
 

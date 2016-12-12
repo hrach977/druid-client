@@ -8,7 +8,7 @@ public class PostAggregation {
     private String type;
     private String name;
     private String fn;
-    private Fields[] fields;
+    private Field[] fields;
     private String ordering;
 
     public String getName() {
@@ -27,11 +27,11 @@ public class PostAggregation {
         this.fn = fn;
     }
 
-    public Fields[] getFields() {
+    public Field[] getFields() {
         return fields;
     }
 
-    public void setFields(Fields[] fields) {
+    public void setFields(Field[] fields) {
         this.fields = fields;
     }
 

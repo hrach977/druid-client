@@ -7,8 +7,12 @@ import java.util.Date;
  */
 public class Response {
     private String version;
-    private Event event;
-    private Date timestamp;
+    private String timestamp;
+    private String dimension;
+    private long count;
+    private long averageResponseTime;
+    private long sumResponseTime;
+
 
     public String getVersion() {
         return version;
@@ -18,43 +22,43 @@ public class Response {
         this.version = version;
     }
 
-    public Date getTimeStamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimeStamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
-    public void setAverageResponseTime(long avgResponseTime) {
-        event.setAverageResponseTime(avgResponseTime);
+    public String getDimension() {
+        return dimension;
     }
 
-    public void setCountt(long count) {
-        event.setCount(count);
-    }
-
-    public void setNumOfUniqueDeviceId(long numOfUniqueDeviceId) {
-        event.setNumOfUniqueDeviceId(numOfUniqueDeviceId);
-    }
-
-    public void setSumResponseTime(long sumResponseTime) {
-        event.setSumResponseTime(sumResponseTime);
-    }
-
-    public long getAvgResponseTime() {
-        return event.getAverageResponseTime();
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
     }
 
     public long getCount() {
-         return event.getCount();
+        return count;
     }
 
-    public long getNumOfUniqueDeviceId() {
-        return event.getNumOfUniqueDeviceId();
+    public void setCount(long count) {
+        this.count = count;
     }
 
-    public long getSumResponseTime()  {
-        return event.getSumResponseTime();
+    public long getAverageResponseTime() {
+        return averageResponseTime;
+    }
+
+    public void setAverageResponseTime(long averageResponseTime) {
+        this.averageResponseTime = averageResponseTime;
+    }
+
+    public long getSumResponseTime() {
+        return sumResponseTime;
+    }
+
+    public void setSumResponseTime(long sumResponseTime) {
+        this.sumResponseTime = sumResponseTime;
     }
 }
