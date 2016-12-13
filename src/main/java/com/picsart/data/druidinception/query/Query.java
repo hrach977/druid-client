@@ -109,11 +109,11 @@ public class Query {
         this.filter = filter;
     }
 
-    public long getThreshold() {
+    public Long getThreshold() {
         return threshold;
     }
 
-    public void setThreshold(long threshold) {
+    public void setThreshold(Long threshold) {
         this.threshold = threshold;
     }
 
