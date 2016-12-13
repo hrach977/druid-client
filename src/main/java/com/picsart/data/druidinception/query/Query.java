@@ -15,6 +15,9 @@ public class Query {
     private String queryType;
     private String dataSource;
     private Filter filter;
+    private long threshold;
+    private String metric;
+
 
 
 
@@ -106,7 +109,26 @@ public class Query {
         this.filter = filter;
     }
 
-
+    public long getThreshold() {
+        return threshold;
     }
+
+    public void setThreshold(long threshold) {
+        this.threshold = threshold;
+    }
+
+    public String getMetric() {
+        return metric;
+    }
+
+    public void setMetric(String metric) {
+        this.metric = metric;
+    }
+
+
+
+
+
+}
 
 
