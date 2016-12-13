@@ -15,7 +15,7 @@ public class Query {
     private String queryType;
     private String dataSource;
     private Filter filter;
-    private long threshold;
+    private Long threshold;
     private String metric;
 
 
