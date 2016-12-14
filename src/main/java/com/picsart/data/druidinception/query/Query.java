@@ -17,6 +17,7 @@ public class Query {
     private Filter filter;
     private Long threshold;
     private String metric;
+    private String dimension;
 
 
 
@@ -125,10 +126,13 @@ public class Query {
         this.metric = metric;
     }
 
+    public String getDimension() {
+        return dimension;
+    }
 
-
-
-
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
+    }
 }
 
 

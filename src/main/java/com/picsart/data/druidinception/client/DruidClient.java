@@ -34,10 +34,10 @@ public class DruidClient {
         this.port = port;
     }
 
-    public List<Response> query(Query query) {
+    public <T> T query(Query query, Class<T> clazz) {
         Gson gson = new Gson();
         String queryJson = gson.toJson(query);
-        System.out.println(queryJson);
+
         String responseString = "";
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
@@ -45,38 +45,14 @@ public class DruidClient {
             postRequest.setHeader("Content-type", "application/json");
             StringEntity message = new StringEntity(queryJson);
             postRequest.setEntity(message);
-            HttpResponse httpResponse = httpClient.execute(postRequest);
-            HttpEntity entity = httpResponse.getEntity();
+            HttpResponse response = httpClient.execute(postRequest);
+            HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
-            JSONArray jsonArray = new JSONArray(responseString);
-
-            List<Response> responses = new ArrayList<>();
-            for(Object j : jsonArray) {
-                JSONObject jsonObject = (JSONObject)j;
-
-                Response response = new Response();
-                response.setVersion(jsonObject.getString("version"));
-                response.setTimestamp(jsonObject.getString("timestamp"));
-
-                JSONObject event = jsonObject.getJSONObject("event");
-                response.setCount(event.getLong("count"));
-
-                if(event.has("sum_response_time")) {
-                    response.setSumResponseTime(event.getLong("sum_response_time"));
-                }
-                if(event.has("avg_response_time")) {
-                    response.setAverageResponseTime(event.getLong("avg_response_time"));
-                }
-                response.setDimension(getDimension(event));
-                responses.add(response);
-            }
-
-            return responses;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return gson.fromJson(responseString, clazz);
     }
 
     private String getDimension(JSONObject event) {

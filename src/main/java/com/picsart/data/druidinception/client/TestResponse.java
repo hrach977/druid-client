@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * @author avetik.sarikyan@picsart.com
  */
-public class Response {
+public class TestResponse {
     private String version;
     private String timestamp;
     private String dimension;

@@ -34,7 +34,7 @@ public class Test {
 
         DruidClient druidClient = new DruidClient("107.182.229.208", 8082);
         //druidClient.query(radio_nam, Response[].class);
-        List<Response> r = druidClient.query(radio_nam_dist);
+        List<TestResponse> r = druidClient.query(radio_nam_dist);
 //        druidClient.query(cont_avg_res_time,Response[].class);
 //        druidClient.query(imageRequestWithResponseTime,Response[].class);
 //        druidClient.query(protocolQuery,Response[].class);
