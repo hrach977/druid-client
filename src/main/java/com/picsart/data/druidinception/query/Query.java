@@ -1,0 +1,136 @@
+package com.picsart.data.druidinception.query;
+
+/**
+ * @author hrachya.yeghishyan@picsart.com
+ */
+public class Query {
+    private String[] dimensions;
+    private Aggregation[] aggregations;
+    private String intervals;
+    private LimitSpec limitSpec;
+    private Object granularity;
+    private PostAggregation[] postAggregations;
+    private String queryType;
+    private String dataSource;
+    private Filter filter;
+    private Long threshold;
+    private String metric;
+    private String dimension;
+
+
+
+
+
+    public Query(String queryType, String dataSource, String[] dimensions, Object granularity, Aggregation[] aggregations, String intervals, LimitSpec limitSpec){
+        this.queryType = queryType;
+        this.dataSource = dataSource;
+        this.dimensions = dimensions;
+        this.granularity = granularity;
+        this.aggregations = aggregations;
+        this.intervals = intervals;
+        this.limitSpec = limitSpec;
+    }
+    public Query(){
+
+    }
+
+
+
+    public String[] getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(String[] dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public Aggregation[] getAggregations() {
+        return aggregations;
+    }
+
+    public void setAggregations(Aggregation[] aggregations) {
+        this.aggregations = aggregations;
+    }
+
+    public String getIntervals() {
+        return intervals;
+    }
+
+    public void setIntervals(String intervals) {
+        this.intervals = intervals;
+    }
+
+    public LimitSpec getLimitSpec() {
+        return limitSpec;
+    }
+
+    public void setLimitSpec(LimitSpec limitSpec) {
+        this.limitSpec = limitSpec;
+    }
+
+    public Object getGranularity() {
+        return granularity;
+    }
+
+    public void setGranularity(Object granularity) {
+        this.granularity = granularity;
+    }
+
+    public PostAggregation[] getPostAggregations() {
+        return postAggregations;
+    }
+
+    public void setPostAggregations(PostAggregation[] postAggregations) {
+        this.postAggregations = postAggregations;
+    }
+
+    public String getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+    }
+
+    public Long getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(Long threshold) {
+        this.threshold = threshold;
+    }
+
+    public String getMetric() {
+        return metric;
+    }
+
+    public void setMetric(String metric) {
+        this.metric = metric;
+    }
+
+    public String getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
+    }
+}
+
+
